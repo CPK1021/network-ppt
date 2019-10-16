@@ -8,7 +8,7 @@
 ### Network 面板概览
 
 <ver />
-![network](/assets/1.png)
+![network](assets/1.png)
 
 <ver />
 1. `Controls`使用这些选项可以控制 `Network` 面板的外观和功能。
@@ -28,7 +28,7 @@
 记录网络活动：显示红色 (记录按钮打开) 表明 DevTools 正在记录。 显示灰色 (记录按钮关闭) 表明 DevTools 未在记录。
 
 <ver />
-![network](/assets/2.png)
+![network](assets/2.png)
 
 <hor />
 
@@ -45,7 +45,7 @@
 
 <ver />
 
-![network](/assets/3.png)
+![network](assets/3.png)
 
 <hor />
 
@@ -87,7 +87,7 @@ Content Download
 
 如果网络异常更加详细的各流程耗时这一点很重要
 
-![network](/assets/4.png)
+![network](assets/4.png)
 
 <hor />
 
@@ -106,7 +106,7 @@ Content Download
 **按住 Shift 并将鼠标悬停在资源上**，可以查看其发起者和依赖项。 本部分将您悬停的资源称为目标。目标上方的第一个绿色编码资源为目标的发者如果上方存在第二个也是绿色编码的资源，那么该资源将是发起者的发起者。 目标下方红色编码的任何资源都是目标的依赖项。
 <ver />
 
-![network](/assets/5.png)
+![network](assets/5.png)
 
 <hor />
 
