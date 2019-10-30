@@ -1,4 +1,4 @@
-## **`console`调试--`network`**
+## **`Chrome DevTools`之`Network`**
 
 - 空格键翻页
 - 左右键切换页面，上下键翻章节
@@ -11,13 +11,25 @@
 ![network](assets/1.png)
 
 <ver />
-1. `Controls`使用这些选项可以控制 `Network` 面板的外观和功能。
-2. `Filters`使用这些选项可以控制在 `Requests Table `中显示哪些资源。**提示：按住 `Cmd (Mac)` 或 `Ctrl (Windows/Linux)` 并点击过滤器可以同时选择多个过滤器。**
-3. `Overview` 此图表显示了资源检索时间的时间线。如果您看到多条竖线堆叠在一起，则说明这些资源被同时检索。
+1. `Controls`**工具栏**使用这些选项可以控制 `Network` 面板的外观和功能。
+2. `Filters`**筛选栏**使用这些选项可以控制在 `Requests Table `中显示哪些资源。**提示：按住 `Cmd (Mac)` 或 `Ctrl (Windows/Linux)` 并点击过滤器可以同时选择多个过滤器。**
+3. `Overview` **概览**资源被加载过来的时间线，如果多条时间线垂直堆叠，表示多个资源被并行加载。
 
 <ver />
-4. `Requests Table`此表格列出了检索的每一个资源。 默认情况下，此表格按时间顺序排序，最早的资源在顶部。点击资源的名称可以显示更多信息。 **提示：右键点击 Timeline 以外的任何一个表格标题可以添加或移除信息列。**
-5. `Summary` 此窗格可以一目了然地告诉您请求总数、传输的数据量和加载时
+4. `Requests Table`**请求列表**该视窗列出了所有的资源请求，默认按时间顺序排序，点击某个资源，可以查看更详细的信息。 **提示：右键点击 Timeline 以外的任何一个表格标题可以添加或移除信息列。**
+5. `Summary`**总览** 显示总的请求数、数据传输量、加载时间信息。
+
+<ver />
+默认情况下，Request Table 请求列表展示如下信息，当然，在请求列表的表头右键可以配置请求列表显示的内容。
+- **Name：**资源的名称。
+- **Status：**HTTP的状态码。
+- **Type**：资源的MIME类型。
+- **Initiator：**表示请求的上游，即发起者。Parser表示是HTML解析器发起的请求；Redirect表示是HTTP跳转发起的请求；Script表示是由脚本发起的请求；Other表示是由其他动作发起的请求，比如用户跳转或者在导航栏输入地址等。
+- **Size：**请求的大小，包括响应头和响应体的内容。
+- **Time：**请求的时间，从请求开始到请求完全结束。
+- **Timeline：**请求的时间线。
+
+
 
 <hor />
 
@@ -36,12 +48,8 @@
 
 <ver />
 
-- 解析 HTML 结构。
-- 加载外部脚本和样式表文件。
-- 解析并执行脚本代码。
-- 构造 HTML DOM 模型。// DOMContentLoaded 相当于 jQuery 中的 ready
-- 加载图片等外部文件。
-- 页面加载完毕。// load
+- 页面文档完全加载并解析完毕之后，会触发DOMContentLoaded事件，它在两个地方都有体现：概览视窗的蓝色竖线，总览视窗的触发时间。
+- 当所有资源加载完成后触发的，它在三个地方有体现：概览视窗的红色竖线，请求列表视窗的红色竖线，总览视窗的触发时间。
 
 <ver />
 
@@ -103,10 +111,23 @@ Content Download
 
 <hor />
 #### 查看资源发起者和依赖项
-**按住 Shift 并将鼠标悬停在资源上**，可以查看其发起者和依赖项。 本部分将您悬停的资源称为目标。目标上方的第一个绿色编码资源为目标的发者如果上方存在第二个也是绿色编码的资源，那么该资源将是发起者的发起者。 目标下方红色编码的任何资源都是目标的依赖项。
+**按住 Shift 并将鼠标悬停在资源上**按时shift键，鼠标hover在请求上，可以查看请求的上游和下游，如下图所示，hover在common.js上，可以看到有一个绿色请求、一个红色请求。其中绿色请求表示common.js的上游请求，即谁触发了common.js请求，红色请求表示common.js的下游请求，即common.js又触发了什么请求。
+
 <ver />
 
 ![network](assets/5.png)
+
+<ver />
+
+#### 对请求列表排序
+请求列表的资源默认是按照起始时间排序，最上面的请求最先发起。点击表头的Timeline可以重新排序，主要有如下几个维度。
+- Timline - Start Time：按请求的发起时间排序。
+- Timline - Response Time：按请求的响应时间排序。
+- Timline - End Time：按请求的结束时间排序。
+- Timline - Total Duration：按请求的总耗时排序，可以快捷的找出耗时最多的资源。
+- Timline - Latency：按请求的延迟排序，延迟是指请求发起的时间到响应开始的时间，可以快捷的找出请求等待时间最长（TTFB）的资源。
+
+<ver />
 
 <hor />
 
@@ -117,14 +138,24 @@ Content Download
 Network 面板中的 initiator 列显示了是哪个脚本的哪一行触发了请求。他显示了在调用堆栈中触发请求的最后一步，除非你用的是，例如：一个本地化的 fetch API,它将会指向一些低层级的类库的代码.
 <ver />
 
-![network](https://user-gold-cdn.xitu.io/2018/12/29/167f8282477941b8?imageslim)
+![network](http://user-gold-cdn.xitu.io/2018/12/29/167f8282477941b8?imageslim)
 
 <ver />
 
 在请求表中，你可以看到有关每个请求的几条信息，例如：Status, Type, Initiator, Size 和 Time 。
 <ver />
 
-![network](https://user-gold-cdn.xitu.io/2018/12/29/167f828279b0b397?imageslim)
+![network](http://user-gold-cdn.xitu.io/2018/12/29/167f828279b0b397?imageslim)
 <ver />
-Network 面板中的过滤器输入可以接受你输入的字符串或正则表达式，仅显示匹配的请求。 但是你也可以使用它来过滤很多属性。
-只需输入 例如 method 或者 mime-type :
+Network 面板中的过滤器输入可以接受你输入的字符串或正则表达式，仅显示匹配的请求。 
+- domain：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。
+- has-response-header：筛选出包含指定响应头的请求。
+- is：通过is:running找出WebSocket请求。
+- larger-than：筛选出请求大于指定字节大小的请求，其中1000表示1k。
+- method：筛选出指定HTTP方法的请求，比如GET请求、POST请求等。
+- mime-type：筛选出指定文件类型的请求。
+cc
+
+
+
+
